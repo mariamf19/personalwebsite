@@ -53,16 +53,6 @@ img.ink { filter: invert(1); }
 
 .wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
 
-/* faint code-editor line numbers */
-.gutter {
-  position: absolute; left: clamp(8px, 1.4vw, 20px); top: 0; bottom: 0;
-  margin: 0; overflow: hidden;
-  font-family: var(--mono); font-size: 11px; line-height: 24px;
-  color: var(--gutter); white-space: pre;
-  pointer-events: none; user-select: none;
-}
-@media (max-width: 1100px) { .gutter { display: none; } }
-
 /* ---------- header ---------- */
 .site {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
@@ -137,14 +127,15 @@ img.ink { filter: invert(1); }
 .ghost { visibility: hidden; }
 .comment { margin: 0; font-size: 14px; letter-spacing: .02em; color: var(--muted); }
 
-.tv { flex: 0 1 240px; margin: 0; }
-.tv-frame { position: relative; width: 100%; max-width: 230px; margin: 0 auto; }
+.tv { flex: 0 0 auto; margin: 0; }
+.tv-frame { position: relative; width: fit-content; margin: 0 auto; }
 .tv-frame .crop { width: 14px; height: 14px; }
 .tv-frame .crop.tl { left: -16px; top: -16px; }
 .tv-frame .crop.tr { right: -16px; top: -16px; }
 .tv-frame .crop.bl { left: -16px; bottom: -16px; }
 .tv-frame .crop.br { right: -16px; bottom: -16px; }
-.tv-frame img { display: block; width: 100%; height: auto; }
+/* sized by screen height so the whole stack always fits above the status bar */
+.tv-frame img { display: block; height: clamp(260px, calc(100vh - 260px), 500px); width: auto; max-width: 100%; }
 
 /* TV screens: static on hover, each opens an attempt */
 .screen {

@@ -4,18 +4,6 @@
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const pad = (v, n = 2) => String(v).padStart(n, '0');
 
-  /* ---------- line-number gutter ---------- */
-  const gutter = document.querySelector('.gutter');
-  const fillGutter = () => {
-    if (!gutter) return;
-    const n = Math.ceil(document.body.scrollHeight / 24);
-    const w = n > 99 ? 3 : 2;
-    gutter.textContent = Array.from({ length: n }, (_, i) => pad(i + 1, w)).join('\n');
-  };
-  fillGutter();
-  window.addEventListener('load', fillGutter);
-  window.addEventListener('resize', fillGutter);
-
   /* ---------- trailing dot cursor + ln/col readout ---------- */
   const cur = document.querySelector('.cursor');
   const pos = document.getElementById('pos');
@@ -37,7 +25,7 @@
   });
   document.documentElement.addEventListener('mouseleave', () => { if (cur) cur.style.opacity = '0'; });
 
-  /* ---------- homepage headline: types, deletes, loops ---------- */
+  /* ---------- homepage headline: first lines stay put, last word types/deletes/loops ---------- */
   const typed = document.getElementById('typed');
   if (typed) {
     const PREFIX = 'trying to make sense\nof the world and myself\nthrough ';
@@ -52,15 +40,13 @@
       let paused = false;
       headline.addEventListener('mouseenter', () => { paused = true; });
       headline.addEventListener('mouseleave', () => { paused = false; });
-      const s = { phase: 'prefix', k: 0, w: 0 };
+      typed.textContent = PREFIX;
+      const s = { phase: 'type', k: 0, w: 0 };
       const step = () => {
         if (paused) { setTimeout(step, 200); return; }
         let delay = 90;
         const word = WORDS[s.w];
-        if (s.phase === 'prefix') {
-          s.k += 1; delay = 38;
-          if (s.k >= PREFIX.length) { s.phase = 'type'; s.k = 0; }
-        } else if (s.phase === 'type') {
+        if (s.phase === 'type') {
           s.k += 1; delay = 95;
           if (s.k >= word.length) { s.phase = 'hold'; delay = 1500; }
         } else if (s.phase === 'hold') {
@@ -69,10 +55,10 @@
           s.k -= 1; delay = 55;
           if (s.k <= 0) { s.k = 0; s.w = (s.w + 1) % WORDS.length; s.phase = 'type'; delay = 400; }
         }
-        typed.textContent = s.phase === 'prefix' ? PREFIX.slice(0, s.k) : PREFIX + WORDS[s.w].slice(0, s.k);
+        typed.textContent = PREFIX + WORDS[s.w].slice(0, s.k);
         setTimeout(step, delay);
       };
-      setTimeout(step, 500);
+      setTimeout(step, 700);
     }
   }
 
