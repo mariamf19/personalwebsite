@@ -307,3 +307,21 @@ img.ink { filter: invert(1); }
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
 }
+
+/* ---------- TEST: one accent colour, used sparingly ---------- */
+:root { --accent: #FF5C8A; }
+/* the active star becomes the accent (drawn star used as a stencil) */
+.nav .star img { visibility: hidden; }
+.nav .star::before { content: ""; position: absolute; inset: 0; -webkit-mask: url(../assets/star.png) center / contain no-repeat; mask: url(../assets/star.png) center / contain no-repeat; background: transparent; transition: background-color .2s ease; }
+.nav a:hover .star::before { background: rgba(242, 240, 234, .35); }
+.nav a[aria-current] .star::before { background: var(--accent); animation: starIn .8s cubic-bezier(.2, .9, .3, 1.25) both; }
+/* the changing word + typing cursor */
+.headline .word { color: var(--accent); }
+.headline .caret, .say .caret, .prompt .caret { background: var(--accent); }
+/* cursor dot, selection, link highlights */
+.cursor .ring { border-color: var(--accent); background: var(--accent); }
+.cursor[data-hot="1"] .ring { background: transparent; }
+::selection { background: var(--accent); color: var(--bg); }
+.tlink:hover, .tlink:focus-visible, .next:hover .v { background: var(--accent); color: var(--bg); }
+.tile a:hover .nosignal { outline-color: var(--accent); }
+.screen .sub { color: var(--accent); }

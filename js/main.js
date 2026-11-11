@@ -55,7 +55,8 @@
           s.k -= 1; delay = 55;
           if (s.k <= 0) { s.k = 0; s.w = (s.w + 1) % WORDS.length; s.phase = 'type'; delay = 400; }
         }
-        typed.textContent = PREFIX + WORDS[s.w].slice(0, s.k);
+        typed.textContent = PREFIX;
+        const wd = document.createElement('span'); wd.className = 'word'; wd.textContent = WORDS[s.w].slice(0, s.k); typed.appendChild(wd);
         setTimeout(step, delay);
       };
       setTimeout(step, 700);
