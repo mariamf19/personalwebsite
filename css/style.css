@@ -79,6 +79,10 @@ img.ink { filter: invert(1); }
 .nav a:hover .star img { opacity: .35; }
 .nav a[aria-current] .star img { opacity: 1; animation: starIn .8s cubic-bezier(.2, .9, .3, 1.25) both; }
 .nav .label { position: relative; }
+@media (max-width: 600px) {
+  .nav ul { gap: 4px 28px; }
+  .nav .star { width: 84px; }
+}
 @keyframes starIn {
   from { transform: rotate(-30deg) scale(.7); opacity: 0; }
   to { transform: none; opacity: 1; }
@@ -90,11 +94,6 @@ img.ink { filter: invert(1); }
   display: inline-block; width: 2px; height: .85em; background: var(--ink);
   margin-left: .1em; vertical-align: -.04em; animation: blink 1s steps(1) infinite;
 }
-.crop { position: absolute; width: 14px; height: 14px; border: 0 solid var(--ink); }
-.crop.tl { border-left-width: 1px; border-top-width: 1px; }
-.crop.tr { border-right-width: 1px; border-top-width: 1px; }
-.crop.bl { border-left-width: 1px; border-bottom-width: 1px; }
-.crop.br { border-right-width: 1px; border-bottom-width: 1px; }
 
 @keyframes scan { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
 @keyframes scanline { 0% { top: 0; opacity: 1; } 92% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
@@ -111,7 +110,8 @@ img.ink { filter: invert(1); }
 .home {
   display: flex; flex-direction: row-reverse; flex-wrap: wrap;
   align-items: center; justify-content: center;
-  gap: 48px clamp(40px, 5vw, 72px); padding: 40px 0 80px;
+  gap: 48px clamp(40px, 5vw, 72px); padding: 24px 0 64px;
+  min-height: calc(100vh - 128px - 28px);
 }
 .home .text {
   flex: 0 1 auto; max-width: 680px; min-width: 0;
@@ -120,8 +120,9 @@ img.ink { filter: invert(1); }
 .headline {
   margin: 0; font-family: var(--hand); font-weight: 400;
   font-size: clamp(22px, 3vw, 42px); line-height: 1.2; letter-spacing: .01em;
-  text-transform: uppercase; white-space: pre;
+  text-transform: uppercase;
 }
+#typed, #ghost { white-space: pre; }
 .type-grid { display: grid; }
 .type-grid > span { grid-area: 1 / 1; }
 .ghost { visibility: hidden; }
@@ -129,11 +130,6 @@ img.ink { filter: invert(1); }
 
 .tv { flex: 0 0 auto; margin: 0; }
 .tv-frame { position: relative; width: fit-content; margin: 0 auto; }
-.tv-frame .crop { width: 14px; height: 14px; }
-.tv-frame .crop.tl { left: -16px; top: -16px; }
-.tv-frame .crop.tr { right: -16px; top: -16px; }
-.tv-frame .crop.bl { left: -16px; bottom: -16px; }
-.tv-frame .crop.br { right: -16px; bottom: -16px; }
 /* sized by screen height so the whole stack always fits above the status bar */
 .tv-frame img { display: block; height: clamp(260px, calc(100vh - 260px), 500px); width: auto; max-width: 100%; }
 
@@ -233,11 +229,6 @@ img.ink { filter: invert(1); }
 }
 .orchid { flex: 0 1 400px; margin: 0; }
 .orchid .frame { position: relative; height: 440px; display: flex; align-items: center; justify-content: center; }
-.orchid .crop { width: 12px; height: 12px; }
-.orchid .crop.tl { left: 0; top: 0; }
-.orchid .crop.tr { right: 0; top: 0; }
-.orchid .crop.bl { left: 0; bottom: 0; }
-.orchid .crop.br { right: 0; bottom: 0; }
 .orchid img { max-width: 78%; max-height: 380px; width: auto; height: auto; animation-duration: 1.4s; animation-timing-function: steps(32); animation-delay: .3s; }
 .say { flex: 0 1 440px; display: flex; flex-direction: column; gap: 24px; }
 .say h1 {
